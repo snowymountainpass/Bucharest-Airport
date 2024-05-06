@@ -9,9 +9,8 @@ import java.util.*
 interface TransactionRepository : JpaRepository<Transaction, UUID> {
 
     fun findTransactionByCarLicensePlate(licensePlate: String): Transaction?
-    fun findTransactionByParkingSpace(parkingSpaceName: String): Transaction?
-    fun findTransactionByParkingSpaceName(parkingSpaceId: String): Transaction?
-    fun findTransactionByStartTime(startTime: Date): Transaction?
-    fun findTransactionByEndTime(endTime: Date): Transaction?
+    fun findTransactionByEntryTime(entryTime: Date): Transaction?
+    fun findTransactionByDepartureTime(departureTime: Date): Transaction?
     fun findTransactionsByPaid(paid: Boolean): Collection<Transaction>
+    fun findTransactionsByAirportName(airportName:String)
 }

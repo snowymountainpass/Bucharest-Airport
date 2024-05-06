@@ -1,24 +1,22 @@
 package com.clockworkcode.backend.model
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.OneToOne
+import jakarta.persistence.*
+import java.lang.reflect.Constructor
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
 data class Transaction(
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
-    val id: UUID,
+    @Id
+    val id:UUID,
     var carLicensePlate: String,
-    var startTime: Date,
-    var endTime: Date,
-    @OneToOne
-    @JoinColumn(name = "parking_space_id") //FK
-    val parkingSpace:ParkingSpace,
+    var entryTime: LocalDateTime,
+    var departureTime: LocalDateTime?,
+    var cost: Float,
+    var isPaid:Boolean = false,
 
-    var cost: Long,
-    var isPaid:Boolean = false
-)
+    @ManyToOne
+    @JoinColumn(name = "airport_id")
+    val airport: Airport,
+
+    )
