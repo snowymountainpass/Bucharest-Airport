@@ -29,7 +29,7 @@ class TransactionService @Autowired constructor(private val transactionRepositor
             isPaid=isPaid,
             airport=airport
         )
-        airport.numberOfOccupiedParkingSpaces++
+
         return transactionRepository.save(transaction);
     }
 

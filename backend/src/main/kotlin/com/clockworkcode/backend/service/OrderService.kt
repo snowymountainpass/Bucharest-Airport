@@ -2,7 +2,6 @@ package com.clockworkcode.backend.service
 
 import com.clockworkcode.backend.dto.PaymentDTO
 import com.stripe.Stripe
-import com.stripe.Stripe.apiKey
 import com.stripe.model.Price
 import com.stripe.model.Product
 import com.stripe.model.checkout.Session
@@ -62,7 +61,7 @@ class OrderService {
             .setReturnUrl("http://localhost:3000/return?session_id={CHECKOUT_SESSION_ID}")//
             .addLineItem(lineItem)//
             .build()
-        
+
         return Session.create(params)
     }
 

@@ -6,13 +6,13 @@ import java.util.*
 @Entity
 data class Airport(
     @Id @GeneratedValue(strategy = GenerationType.UUID)
-    val id: UUID,
-    var airportName:String,
-    var airportCode:String,
-    var airportCostPerMinute:Int,
-    var numberOfOccupiedParkingSpaces:Int,
-    var numberOfParkingSpaces:Int,
+    internal val id: UUID,
+    internal var airportName:String,
+    internal var airportCode:String,
+    internal var airportCostPerMinute:Int,
+    internal var numberOfOccupiedParkingSpaces:Int,
+    internal var numberOfParkingSpaces:Int,
 
     @OneToMany(mappedBy = "airport", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val transaction: MutableList<Transaction>,
+    internal val transaction: MutableList<Transaction>,
 )

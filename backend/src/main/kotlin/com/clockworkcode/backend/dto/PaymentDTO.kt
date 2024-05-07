@@ -2,11 +2,11 @@ package com.clockworkcode.backend.dto
 
 import java.time.LocalDateTime
 
-class PaymentDTO(
-    val carLicensePlate: String,
-    val airportName: String,
-    val entryTime: LocalDateTime,
-    val departureTime: LocalDateTime?,
-    val cost: Long,
-    val isPaid:Boolean,
+data class PaymentDTO(
+    internal val carLicensePlate: String,
+    internal val airportName: String,
+    internal val entryTime: LocalDateTime,
+    internal var departureTime: LocalDateTime?=null,
+    internal var cost: Long,
+    internal var isPaid:Boolean,
 )

@@ -9,15 +9,15 @@ import java.util.*
 @Entity
 data class Transaction(
     @Id
-    val id:UUID,
-    var carLicensePlate: String,
-    var entryTime: LocalDateTime,
-    var departureTime: LocalDateTime?,
-    var cost: Long,
-    var isPaid:Boolean = false,
+    internal val id:UUID,
+    internal var carLicensePlate: String,
+    internal var entryTime: LocalDateTime,
+    internal var departureTime: LocalDateTime?,
+    private var cost: Long,
+    internal var isPaid:Boolean = false,
 
     @ManyToOne
     @JoinColumn(name = "airport_id")
-    val airport: Airport,
+    internal val airport: Airport,
 
     )
