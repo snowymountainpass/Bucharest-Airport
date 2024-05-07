@@ -3,6 +3,7 @@ package com.clockworkcode.backend.model
 import jakarta.persistence.*
 import java.lang.reflect.Constructor
 import java.time.LocalDateTime
+
 import java.util.*
 
 @Entity
@@ -12,7 +13,7 @@ data class Transaction(
     var carLicensePlate: String,
     var entryTime: LocalDateTime,
     var departureTime: LocalDateTime?,
-    var cost: Float,
+    var cost: Long,
     var isPaid:Boolean = false,
 
     @ManyToOne

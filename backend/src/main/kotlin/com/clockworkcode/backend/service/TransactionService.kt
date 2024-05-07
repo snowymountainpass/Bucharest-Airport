@@ -15,7 +15,7 @@ class TransactionService @Autowired constructor(private val transactionRepositor
         carLicensePlate: String,
         entryTime: LocalDateTime,
         departureTime: LocalDateTime?=null,
-        cost: Float=0F,
+        cost: Long=0,
         isPaid:Boolean=false,
         airport: Airport
     ):Transaction
