@@ -12,6 +12,10 @@ class AirportService @Autowired constructor(private val airportRepository: Airpo
         airport.numberOfOccupiedParkingSpaces++
         airportRepository.save(airport)
     }
+    fun decreaseOccupiedParkingSpaces(airport : Airport) {
+        airport.numberOfOccupiedParkingSpaces--
+        airportRepository.save(airport)
+    }
 
     fun getAirportByAirportName(airportName:String):Airport{
         return airportRepository.findAirportByAirportName(airportName)

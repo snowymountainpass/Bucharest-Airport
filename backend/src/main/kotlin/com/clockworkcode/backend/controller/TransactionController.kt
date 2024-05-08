@@ -42,7 +42,7 @@ class TransactionController @Autowired constructor(
                 airportService.increaseOccupiedParkingSpaces(airport)
                 logger.info { "A new transaction was added for license plate "+ paymentDTO.carLicensePlate + " @ " + LocalDateTime.now() }
         }else{
-
+            logger.info { "Invalid car license plate " + paymentDTO.carLicensePlate + " @ " + LocalDateTime.now() }
         }
 
         return ResponseEntity.ok(responseMap)

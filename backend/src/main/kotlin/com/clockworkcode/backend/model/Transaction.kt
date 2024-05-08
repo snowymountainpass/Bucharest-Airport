@@ -10,10 +10,10 @@ import java.util.*
 data class Transaction(
     @Id
     internal val id:UUID,
-    internal var carLicensePlate: String,
-    internal var entryTime: LocalDateTime,
+    internal val carLicensePlate: String,
+    internal val entryTime: LocalDateTime,
     internal var departureTime: LocalDateTime?,
-    private var cost: Long,
+    internal var cost: Long,
     internal var isPaid:Boolean = false,
 
     @ManyToOne
