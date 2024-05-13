@@ -25,7 +25,7 @@ class TransactionController @Autowired constructor(
     private val logger = KotlinLogging.logger {}
 
     @PostMapping("/addTransaction")
-    fun addTransaction(paymentDTO: PaymentDTO): ResponseEntity<Map<String, Boolean>>{
+    fun addTransaction(response: Map<String, String>): ResponseEntity<Map<String, Boolean>>{
         var responseMap:Map<String, Boolean> = HashMap()
         //TODO: add validator for license plate
 
@@ -34,10 +34,6 @@ class TransactionController @Autowired constructor(
             val airport = airportService.getAirportByAirportName(paymentDTO.airportName)
             transactionService.addTransaction(
                 paymentDTO.carLicensePlate,
-                paymentDTO.entryTime,
-                paymentDTO.departureTime,
-                paymentDTO.cost,
-                paymentDTO.isPaid,
                 airport)
                 airportService.increaseOccupiedParkingSpaces(airport)
                 logger.info { "A new transaction was added for license plate "+ paymentDTO.carLicensePlate + " @ " + LocalDateTime.now() }
