@@ -16,20 +16,16 @@ class TransactionService @Autowired constructor(private val transactionRepositor
 
     fun addTransaction(
         carLicensePlate: String,
-        entryTime: LocalDateTime,
-        departureTime: LocalDateTime?=null,
-        cost: Long=0,
-        isPaid:Boolean=false,
         airport: Airport
     )
     {
         val transaction = Transaction(
             id = UUID.randomUUID(),
             carLicensePlate=carLicensePlate,
-            entryTime=entryTime,
-            departureTime=departureTime,
-            cost=cost,
-            isPaid=isPaid,
+            entryTime=LocalDateTime.now(),
+            departureTime=null,
+            cost=0,
+            isPaid=false,
             airport=airport
         )
 
