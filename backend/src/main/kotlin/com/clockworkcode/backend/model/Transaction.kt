@@ -1,20 +1,20 @@
 package com.clockworkcode.backend.model
 
 import jakarta.persistence.*
-import java.lang.reflect.Constructor
 import java.time.LocalDateTime
-
 import java.util.*
 
 @Entity
 data class Transaction(
     @Id
-    internal val id:UUID,
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
+    @SequenceGenerator(name = "transaction_seq", sequenceName = "transaction_sequence", allocationSize = 1)
+    internal val id:Long? = null,
     internal val carLicensePlate: String,
     internal val entryTime: LocalDateTime,
     internal var departureTime: LocalDateTime?,
     internal var cost: Long,
-    internal var isPaid:Boolean = false,
+    internal var transactionIsPaid:Boolean = false,
 
     @ManyToOne
     @JoinColumn(name = "airport_id")

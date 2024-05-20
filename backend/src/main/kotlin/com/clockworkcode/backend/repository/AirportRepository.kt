@@ -7,5 +7,5 @@ import java.util.*
 interface AirportRepository : JpaRepository<Airport, UUID> {
 
     fun findAirportByAirportName(airportName: String):Airport
-
+    fun findAirportByAirportNameContains(airportName: String):Airport
 }

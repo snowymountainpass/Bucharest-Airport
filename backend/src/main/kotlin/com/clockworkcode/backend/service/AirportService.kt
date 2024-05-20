@@ -20,5 +20,7 @@ class AirportService @Autowired constructor(private val airportRepository: Airpo
     fun getAirportByAirportName(airportName:String):Airport{
         return airportRepository.findAirportByAirportName(airportName)
     }
-
+    fun getAirportByPartialAirportName(partialAirportName:String):Airport{
+        return airportRepository.findAirportByAirportNameContains(partialAirportName)
+    }
 }

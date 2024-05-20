@@ -29,7 +29,7 @@ class OrderController @Autowired constructor(val orderService: OrderService,
             transaction.entryTime,
             transaction.departureTime,
             transaction.cost,
-            transaction.isPaid
+            transaction.transactionIsPaid
         )
 
         return paymentDTO
@@ -37,12 +37,12 @@ class OrderController @Autowired constructor(val orderService: OrderService,
 
     @PostMapping("/checkout")
     fun checkout(@RequestBody paymentDTO: PaymentDTO): ResponseEntity<Map<String, String>> {
-        val paymentDTO= getPaymentDetails(paymentDTO.carLicensePlate)
-        val session:Session = orderService.createSession(paymentDTO)
+        val paymentDto= getPaymentDetails(paymentDTO.carLicensePlate)
+        val session:Session = orderService.createSession(paymentDto)
         // Prepare response map with client secret
         val responseMap:HashMap<String,String> = HashMap()
         responseMap.put("clientSecret",session.getClientSecret())
-        airportService.decreaseOccupiedParkingSpaces(airportService.getAirportByAirportName(paymentDTO.airportName))
+        airportService.decreaseOccupiedParkingSpaces(airportService.getAirportByAirportName(paymentDto.airportName))
 
         return ResponseEntity.ok(responseMap)
     }

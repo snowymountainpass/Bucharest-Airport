@@ -20,12 +20,11 @@ class TransactionService @Autowired constructor(private val transactionRepositor
     )
     {
         val transaction = Transaction(
-            id = UUID.randomUUID(),
             carLicensePlate=carLicensePlate,
             entryTime=LocalDateTime.now(),
             departureTime=null,
             cost=0,
-            isPaid=false,
+            transactionIsPaid=false,
             airport=airport
         )
 

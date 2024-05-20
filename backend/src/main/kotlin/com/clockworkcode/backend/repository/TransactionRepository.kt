@@ -12,6 +12,6 @@ interface TransactionRepository : JpaRepository<Transaction, UUID> {
     fun findTransactionByCarLicensePlate(licensePlate: String): Transaction?
     fun findTransactionByEntryTime(entryTime: LocalDateTime): Transaction?
     fun findTransactionByDepartureTime(departureTime: LocalDateTime): Transaction?
-    fun findTransactionsByPaid(paid: Boolean): Collection<Transaction>
-    fun findTransactionsByAirportName(airportName:String)
+    fun findTransactionsByTransactionIsPaid(paid: Boolean): Collection<Transaction>
+    fun findTransactionsByAirport_AirportName(airportName:String)
 }
