@@ -4,6 +4,7 @@ export default {
     "./src/**/*.{html,js}",
     "./node_modules/flowbite/**/*.js"
   ],
+  darkMode: 'class',
   theme: {
     extend: {},
   },
