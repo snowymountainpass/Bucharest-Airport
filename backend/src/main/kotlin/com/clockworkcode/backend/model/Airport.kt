@@ -18,4 +18,10 @@ data class Airport(
 
     @OneToMany(mappedBy = "airport", cascade = [CascadeType.ALL], orphanRemoval = true)
     internal val transaction: MutableList<Transaction>,
-)
+
+
+) {
+    override fun toString(): String {
+        return "Airport(id=$id, airportName='$airportName', airportCode='$airportCode', airportCostPerMinute=$airportCostPerMinute, numberOfOccupiedParkingSpaces=$numberOfOccupiedParkingSpaces, numberOfParkingSpaces=$numberOfParkingSpaces, transaction=$transaction)"
+    }
+}

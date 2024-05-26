@@ -7,6 +7,6 @@ data class PaymentDTO(
     internal val airportName: String,
     internal val entryTime: LocalDateTime,
     internal var departureTime: LocalDateTime?=null,
-    internal var cost: Long,
+    internal var cost: Int,
     internal var isPaid:Boolean,
 )

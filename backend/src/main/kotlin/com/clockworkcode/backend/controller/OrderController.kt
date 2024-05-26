@@ -18,12 +18,12 @@ class OrderController @Autowired constructor(val orderService: OrderService,
                                              val airportService: AirportService)
 {
     fun getPaymentDetails(carLicensePlate:String): PaymentDTO  {
-        var transaction: Transaction? = transactionService.getTransactionByLicensePlate(carLicensePlate)
+        val transaction: Transaction? = transactionService.getTransactionByLicensePlate(carLicensePlate)
         if (transaction != null) {
             transactionService.setDepartureTime(transaction)
             transactionService.setCost(transaction)
         }
-        var paymentDTO = PaymentDTO(
+        val paymentDTO = PaymentDTO(
             transaction!!.carLicensePlate,
             transaction.airport.airportName,
             transaction.entryTime,
@@ -36,12 +36,12 @@ class OrderController @Autowired constructor(val orderService: OrderService,
     }
 
     @PostMapping("/checkout")
-    fun checkout(@RequestBody paymentDTO: PaymentDTO): ResponseEntity<Map<String, String>> {
-        val paymentDto= getPaymentDetails(paymentDTO.carLicensePlate)
+    fun checkout(@RequestBody requestBody: Map<String, String>): ResponseEntity<Map<String, String>> {
+        val paymentDto:PaymentDTO= getPaymentDetails(requestBody["licensePlate"]!!)
         val session:Session = orderService.createSession(paymentDto)
         // Prepare response map with client secret
         val responseMap:HashMap<String,String> = HashMap()
-        responseMap.put("clientSecret",session.getClientSecret())
+        responseMap["clientSecret"] = session.clientSecret
         airportService.decreaseOccupiedParkingSpaces(airportService.getAirportByAirportName(paymentDto.airportName))
 
         return ResponseEntity.ok(responseMap)

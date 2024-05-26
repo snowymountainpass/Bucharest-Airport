@@ -11,23 +11,24 @@ import com.stripe.param.checkout.SessionCreateParams
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.Duration
+import java.time.format.DateTimeFormatter
 import kotlin.math.abs
 
 @Service
 class OrderService {
-    @get:Value(value = "\${STRIPE_SECRET_KEY}")
-     val apiKey:String = ""
+    @Value("\${STRIPE_SECRET_KEY}")
+    lateinit var apiKey:String
 
     fun createProduct(paymentDTO: PaymentDTO):Product {
 
         val durationInMinutes:Long = abs(Duration.between(paymentDTO.entryTime,paymentDTO.departureTime).toMinutes())
-
+        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         val params:ProductCreateParams = ProductCreateParams.builder()//
             .setName("Parking Space Cost")//
             .setDescription(
                 ((((("Car " + paymentDTO.carLicensePlate) +
-                        " spent " + durationInMinutes.toString() + " minutes (" + paymentDTO.entryTime) + " to "
-                        + paymentDTO.departureTime) + ") at the "
+                        " spent " + durationInMinutes.toString() + " minutes (" + paymentDTO.entryTime.format(formatter)) + " to "
+                        + paymentDTO.departureTime!!.format(formatter)) + ") at the "
                         + paymentDTO.airportName) ) + ".")//
             .build()
         return Product.create(params)
@@ -36,7 +37,7 @@ class OrderService {
     fun createPrice(paymentDTO:PaymentDTO,product:Product):Price{
         val params:PriceCreateParams =
         PriceCreateParams.builder() //
-            .setUnitAmount(paymentDTO.cost*100) //amount * 100 euro cents
+            .setUnitAmount((paymentDTO.cost*100).toLong()) //amount * 100 euro cents
             .setCurrency("eur")//
             .setNickname(/* nickname = */ product.description)
             .setProduct(/* product = */ product.id)

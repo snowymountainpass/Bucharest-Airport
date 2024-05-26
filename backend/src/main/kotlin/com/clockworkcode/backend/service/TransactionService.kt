@@ -23,7 +23,7 @@ class TransactionService @Autowired constructor(private val transactionRepositor
             carLicensePlate=carLicensePlate,
             entryTime=LocalDateTime.now(),
             departureTime=null,
-            cost=0,
+            cost=airport.airportCostPerMinute,
             transactionIsPaid=false,
             airport=airport
         )
@@ -41,9 +41,9 @@ class TransactionService @Autowired constructor(private val transactionRepositor
         return transactionRepository.findTransactionByCarLicensePlate(carLicensePlate)!!
     }
 
-    fun calculateAmountToBePaid(transaction: Transaction): Long {
-        val durationInMinutes:Long = abs(Duration.between(transaction.entryTime,transaction.departureTime).toMinutes())
-        val costPerAirport:Long = abs(transaction.cost)
+    fun calculateAmountToBePaid(transaction: Transaction): Int {
+        val durationInMinutes:Int = abs(Duration.between(transaction.entryTime,transaction.departureTime).toMinutes()).toInt()
+        val costPerAirport:Int = abs(transaction.cost)
         return durationInMinutes*costPerAirport
     }
 

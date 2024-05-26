@@ -13,11 +13,17 @@ data class Transaction(
     internal val carLicensePlate: String,
     internal val entryTime: LocalDateTime,
     internal var departureTime: LocalDateTime?,
-    internal var cost: Long,
+    internal var cost: Int,
     internal var transactionIsPaid:Boolean = false,
 
     @ManyToOne
     @JoinColumn(name = "airport_id")
     internal val airport: Airport,
 
-    )
+
+
+    ) {
+    override fun toString(): String {
+        return "Transaction(id=$id, carLicensePlate='$carLicensePlate', entryTime=$entryTime, departureTime=$departureTime, cost=$cost, transactionIsPaid=$transactionIsPaid, airport=$airport)"
+    }
+}
