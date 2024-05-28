@@ -39,6 +39,7 @@ dependencies {
 //    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.6'
     implementation 'ch.qos.logback:logback-classic:1.4.7'
     implementation "com.stripe:stripe-java:25.5.0"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

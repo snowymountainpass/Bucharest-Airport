@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import {atom, useAtom} from 'jotai'
+import axios from "axios";
 
 export const licensePlateAtom = atom('');
+export const clientSecretAtom = atom('')
 
 const SearchBar = () => {
-    const [licensePlate, setLicensePlate] = useAtom(licensePlateAtom);
+    const [licensePlate, setLicensePlate] = useAtom(licensePlateAtom)
+    const [clientSecret, setClientSecret] = useAtom(clientSecretAtom)
     const navigate = useNavigate();
 
     const handleInputChange = (event) => {
@@ -13,9 +16,29 @@ const SearchBar = () => {
 
     const startCheckout = async (e) =>{
         e.preventDefault();
-        navigate('/order/checkout')
+        determineCheckoutCost();
+        navigate('/order/checkout');
     }
+    
+    function determineCheckoutCost(){
+        axios.post('http://localhost:8080/order/checkout', {
+            licensePlate: licensePlate
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+            }
+        })
+            .then(function (response) {
+                setClientSecret(response.data.clientSecret);
+            })
+            .catch(function (error) {
+                console.log('Error fetching data:', error);
+            })
 
+    }
+    
   return (
     <form className="max-w-md mx-auto">
       <label

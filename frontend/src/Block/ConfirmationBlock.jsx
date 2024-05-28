@@ -6,7 +6,7 @@ const ConfirmationBlock = () => {
 
     const navigate = useNavigate();
     const [status, setStatus] = useState(null);
-    // const [customerEmail, setCustomerEmail] = useState('');
+    const [customerEmail, setCustomerEmail] = useState('');
 
     useEffect(() => {
         const queryString = window.location.search;
@@ -17,7 +17,7 @@ const ConfirmationBlock = () => {
             .then((res) => res.json())
             .then((data) => {
                 setStatus(data.status);
-                // setCustomerEmail(data.customer_email);
+                setCustomerEmail(data.customer_email); //customer_email
             });
     }, []);
 
@@ -28,6 +28,9 @@ const ConfirmationBlock = () => {
         )
     }
     if (status === 'complete') {
+
+        // connection to /payment-status => pass the license plate from the licensePlateAtom
+
         return (
             <HeroBackgroundSection/>
             // TODO: add toast - https://flowbite.com/docs/components/toast/

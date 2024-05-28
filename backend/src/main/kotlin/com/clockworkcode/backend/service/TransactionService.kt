@@ -43,12 +43,17 @@ class TransactionService @Autowired constructor(private val transactionRepositor
 
     fun calculateAmountToBePaid(transaction: Transaction): Int {
         val durationInMinutes:Int = abs(Duration.between(transaction.entryTime,transaction.departureTime).toMinutes()).toInt()
-        val costPerAirport:Int = abs(transaction.cost)
+        val costPerAirport:Int = abs(transaction.airport.airportCostPerMinute)
         return durationInMinutes*costPerAirport
     }
 
     fun setCost(transaction: Transaction){
         transaction.cost=calculateAmountToBePaid(transaction)
+        transactionRepository.save(transaction)
+    }
+
+    fun setIsPaid(transaction: Transaction){
+        transaction.transactionIsPaid=true
         transactionRepository.save(transaction)
     }
 

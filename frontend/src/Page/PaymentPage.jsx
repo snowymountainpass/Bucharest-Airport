@@ -5,7 +5,7 @@ import Footer from "../Block/Footer.jsx";
 
 const PaymentPage = () => {
     return (
-        <div className="flex flex-col  bg-red-500">
+        <div className="flex flex-col bg-red-500">
             <Header/>
             <PaymentBlock/>
             <Footer />

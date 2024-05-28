@@ -22,6 +22,6 @@ data class Airport(
 
 ) {
     override fun toString(): String {
-        return "Airport(id=$id, airportName='$airportName', airportCode='$airportCode', airportCostPerMinute=$airportCostPerMinute, numberOfOccupiedParkingSpaces=$numberOfOccupiedParkingSpaces, numberOfParkingSpaces=$numberOfParkingSpaces, transaction=$transaction)"
+        return "Airport(id=$id, airportName='$airportName', airportCode='$airportCode', airportCostPerMinute=$airportCostPerMinute, numberOfOccupiedParkingSpaces=$numberOfOccupiedParkingSpaces, numberOfParkingSpaces=$numberOfParkingSpaces)"
     }
 }

@@ -20,10 +20,8 @@ data class Transaction(
     @JoinColumn(name = "airport_id")
     internal val airport: Airport,
 
-
-
     ) {
     override fun toString(): String {
-        return "Transaction(id=$id, carLicensePlate='$carLicensePlate', entryTime=$entryTime, departureTime=$departureTime, cost=$cost, transactionIsPaid=$transactionIsPaid, airport=$airport)"
+        return "Transaction(id=$id, carLicensePlate='$carLicensePlate', entryTime=$entryTime, departureTime=$departureTime, cost=$cost, transactionIsPaid=$transactionIsPaid, airportName=$(airport.airportName)"
     }
 }

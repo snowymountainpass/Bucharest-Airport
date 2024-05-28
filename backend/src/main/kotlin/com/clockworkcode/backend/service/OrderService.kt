@@ -59,7 +59,7 @@ class OrderService {
             .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)//
             .setMode(SessionCreateParams.Mode.PAYMENT)//
             .setUiMode(SessionCreateParams.UiMode.EMBEDDED)//
-            .setReturnUrl("http://localhost:3000/return?session_id={CHECKOUT_SESSION_ID}")//
+            .setReturnUrl("http://localhost:3000/confirmation?session_id={CHECKOUT_SESSION_ID}")//
             .addLineItem(lineItem)//
             .build()
 

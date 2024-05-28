@@ -54,13 +54,28 @@ class OrderController @Autowired constructor(val orderService: OrderService,
 
         // Extract status and customer email from the session
         val status:String = session.status
-        val customerEmail:String = session.customerEmail
+//        val customerEmail:String = session.customerEmail
+
 
         // Prepare response map with status and customer email
         val responseMap = HashMap<String,String>()
         responseMap.put("status", status)
-        responseMap.put("customerEmail", customerEmail)
+//        responseMap.put("customerEmail", customerEmail)
 
         return ResponseEntity.ok(responseMap)
     }
+
+    @PostMapping("/payment-status")
+    fun setPaymentStatus(@RequestBody requestBody: Map<String, String>): ResponseEntity<Map<String, Boolean>> {
+        val responseMap:HashMap<String,Boolean> = HashMap()
+        val licensePlate:String= requestBody["licensePlate"]!!
+        val transaction = transactionService.getTransactionByLicensePlate(licensePlate)
+        transactionService.setIsPaid(transaction)
+
+        responseMap.put("isPaid", true)
+
+        return ResponseEntity.ok(responseMap)
+
+    }
+
 }

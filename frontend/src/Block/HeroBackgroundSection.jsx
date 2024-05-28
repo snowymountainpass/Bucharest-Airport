@@ -1,4 +1,6 @@
-const HeroBackgroundSection = () => {
+import PropTypes from "prop-types";
+
+const HeroBackgroundSection = ({customerEmail}) => {
   return (
     <section className="bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-700 bg-blend-multiply">
       <div className="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
@@ -6,12 +8,12 @@ const HeroBackgroundSection = () => {
           Payment is successful!
         </h1>
         <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
-          You will receive your receipt by email.Thank you for using Bucharest International Airport!
+          Your receipt has been sent to {customerEmail}.Thank you for using Bucharest International Airport!
           We hope to see you back soon!
         </p>
         <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
           <a
-            href="#"
+            href="/"
             className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
           >
             Home
@@ -36,5 +38,9 @@ const HeroBackgroundSection = () => {
     </section>
   );
 };
+
+HeroBackgroundSection.propTypes = {
+  customerEmail: PropTypes.string,
+}
 
 export default HeroBackgroundSection;
