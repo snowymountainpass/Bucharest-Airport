@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import {atom, useAtom} from 'jotai'
+import {useAtom} from 'jotai'
 import axios from "axios";
-
-export const licensePlateAtom = atom('');
-export const clientSecretAtom = atom('')
+import * as atoms from "./Atoms.jsx";
 
 const SearchBar = () => {
-    const [licensePlate, setLicensePlate] = useAtom(licensePlateAtom)
-    const [clientSecret, setClientSecret] = useAtom(clientSecretAtom)
+    const [licensePlate, setLicensePlate] = useAtom(atoms.licensePlateAtom)
+    const [clientSecret, setClientSecret] = useAtom(atoms.clientSecretAtom)
+
     const navigate = useNavigate();
 
     const handleInputChange = (event) => {
@@ -38,7 +37,7 @@ const SearchBar = () => {
             })
 
     }
-    
+
   return (
     <form className="max-w-md mx-auto">
       <label

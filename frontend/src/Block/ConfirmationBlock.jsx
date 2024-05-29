@@ -1,38 +1,40 @@
 import HeroBackgroundSection from "./HeroBackgroundSection.jsx";
 import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
+import {useAtom} from "jotai";
+import axios from "axios";
+import * as atoms from "../Component/Atoms.jsx";
+
 
 const ConfirmationBlock = () => {
-
     const navigate = useNavigate();
     const [status, setStatus] = useState(null);
+    const [isPaid,setIsPaid] = useAtom(atoms.isPaidAtom);
     const [customerEmail, setCustomerEmail] = useState('');
+    const [clientSecret] = useAtom(atoms.clientSecretAtom);
+
 
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const sessionId = urlParams.get('session_id');
 
-        fetch(`http://localhost:8080/order/session-status?session_id=${sessionId}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setStatus(data.status);
-                setCustomerEmail(data.customer_email); //customer_email
-            });
+        axios.get(`http://localhost:8080/order/session-status?session_id=${sessionId}`)
+            .then((response) => {
+                setStatus(response.data.status);
+                setCustomerEmail(response.data.customerEmail)
+                setIsPaid(response.data.isPaid)
+            })
     }, []);
 
-    if (status === 'open') {
-        return (
-            navigate('/order/checkout')
-            // <Navigate to="'http://localhost:8080/order/checkout"/>
-        )
+    if (status === "open") {
+      return navigate("/order/checkout");
     }
     if (status === 'complete') {
-
-        // connection to /payment-status => pass the license plate from the licensePlateAtom
-
         return (
-            <HeroBackgroundSection/>
+            <HeroBackgroundSection
+                customerEmail={customerEmail}
+            />
             // TODO: add toast - https://flowbite.com/docs/components/toast/
         );
     }
@@ -40,3 +42,4 @@ const ConfirmationBlock = () => {
 }
 
 export default ConfirmationBlock ;
+

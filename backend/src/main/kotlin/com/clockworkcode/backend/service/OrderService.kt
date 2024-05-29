@@ -30,6 +30,7 @@ class OrderService {
                         " spent " + durationInMinutes.toString() + " minutes (" + paymentDTO.entryTime.format(formatter)) + " to "
                         + paymentDTO.departureTime!!.format(formatter)) + ") at the "
                         + paymentDTO.airportName) ) + ".")//
+            .setStatementDescriptor(paymentDTO.carLicensePlate)//
             .build()
         return Product.create(params)
     }
@@ -61,6 +62,7 @@ class OrderService {
             .setUiMode(SessionCreateParams.UiMode.EMBEDDED)//
             .setReturnUrl("http://localhost:3000/confirmation?session_id={CHECKOUT_SESSION_ID}")//
             .addLineItem(lineItem)//
+            .putMetadata("licensePlate",product.statementDescriptor)
             .build()
 
         return Session.create(params)
