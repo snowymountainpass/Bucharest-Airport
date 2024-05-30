@@ -8,8 +8,8 @@ const HeroBackgroundSection = ({customerEmail}) => {
           Payment is successful!
         </h1>
         <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
-          Your receipt has been sent to {customerEmail}.Thank you for using Bucharest International Airport!
-          We hope to see you back soon!
+          Your receipt has been sent to {customerEmail}. Please exit the parking lot in 5 minutes or face extra charges.
+          Thank you for using Bucharest International Airport! We hope to see you back soon!
         </p>
         <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
           <a

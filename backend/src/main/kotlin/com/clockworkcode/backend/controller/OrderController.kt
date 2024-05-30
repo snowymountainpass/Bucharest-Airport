@@ -61,8 +61,10 @@ class OrderController @Autowired constructor(val orderService: OrderService,
         val customerEmail:String = session.customerDetails.email
 
         if(status == "complete"){
-            val transaction = transactionService.getTransactionByLicensePlate(licensePlate)
-            transactionService.setIsPaid(transaction)
+            val transaction = transactionService.findLatestTransactionForLicensePlate(licensePlate)
+            if (transaction != null) {
+                transactionService.setIsPaid(transaction)
+            }
             logger.info { "The transaction for license plate "+ licensePlate + " has been paid at "+LocalDateTime.now()+"!"}
         }
 

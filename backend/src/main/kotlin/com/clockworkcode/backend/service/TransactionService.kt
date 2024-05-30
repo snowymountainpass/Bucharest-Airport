@@ -38,7 +38,7 @@ class TransactionService @Autowired constructor(private val transactionRepositor
     }
 
     fun getTransactionByLicensePlate(carLicensePlate: String): Transaction {
-        return transactionRepository.findTransactionByCarLicensePlate(carLicensePlate)!!
+        return transactionRepository.findTransactionByCarLicensePlateAndTransactionIsPaid(carLicensePlate,false)!!
     }
 
     fun calculateAmountToBePaid(transaction: Transaction): Int {
@@ -55,6 +55,21 @@ class TransactionService @Autowired constructor(private val transactionRepositor
     fun setIsPaid(transaction: Transaction){
         transaction.transactionIsPaid=true
         transactionRepository.save(transaction)
+    }
+
+    fun getUnpaidTransaction(carLicensePlate: String): Transaction? {
+        val transaction: Transaction? =
+            transactionRepository.findTransactionByCarLicensePlateAndTransactionIsPaid(carLicensePlate,false)
+
+        return transaction
+    }
+
+    fun findLatestTransactionForLicensePlate(licensePlate: String): Transaction? {
+        val licensePlateTransactions:List<Transaction> = transactionRepository.findTransactionsByCarLicensePlateOrderByDepartureTimeDesc(licensePlate)!!
+        if(licensePlateTransactions.isNotEmpty()){
+            return licensePlateTransactions.first()
+        }
+        return null
     }
 
 }
