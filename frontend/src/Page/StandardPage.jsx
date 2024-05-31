@@ -9,7 +9,7 @@ const StandardPage = ({children}) => {
             <main className="flex-grow flex items-center justify-center bg-red-400">
                 {children}
             </main>
-            <Footer />
+            <Footer/>
         </div>
     );
 }

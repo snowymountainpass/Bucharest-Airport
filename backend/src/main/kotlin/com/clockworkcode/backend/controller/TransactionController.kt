@@ -1,5 +1,6 @@
 package com.clockworkcode.backend.controller
 
+import com.clockworkcode.backend.model.Airport
 import com.clockworkcode.backend.model.Transaction
 import com.clockworkcode.backend.service.AirportService
 import com.clockworkcode.backend.service.TransactionService
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.HashMap
 
 @RestController
 @RequestMapping("/transaction")
@@ -21,57 +24,58 @@ class TransactionController @Autowired constructor(
 
     @PostMapping("/addTransaction")
     fun addTransaction(@RequestBody response: Map<String, String>): ResponseEntity<Map<String, Boolean>>{
-        var resultMap = HashMap<String, String>()
+
         var responseMap = HashMap<String, Boolean>()
-        //TODO: add validation for license plate
-        //TODO: add validation for airport
+        val utility = Utility()
+        var licensePlate=""
+        var airportName=""
 
         if(response.containsKey("licensePlate") && response.containsKey("airport") ){
-            resultMap["licensePlate"] = response["licensePlate"].toString()
-            val utility = Utility()
-            resultMap["airport"] =  utility.extractAirportName(response["airport"].toString())
+            licensePlate = utility.cleanLicensePlate(response["licensePlate"].toString().uppercase(Locale.getDefault()))
+            airportName = utility.extractAirportName(response["airport"].toString())
         }
 
-        var isValidCarLicensePlate=true
+        val isValidCarLicensePlate= utility.isValidLicensePlate(licensePlate) && utility.isValidAgainstSQLInjection(licensePlate)
+
         if (isValidCarLicensePlate){
-            val airport = airportService.getAirportByPartialAirportName(resultMap["airport"]!!)
+            val airport:Airport = airportService.getAirportByPartialAirportName(airportName)
 
             //Create a new transaction only if no open/unpaid transaction already exists
-            if (transactionService.getUnpaidTransaction(resultMap["licensePlate"]!!) !=null) {
+            if (transactionService.getUnpaidTransaction(licensePlate) !=null) {
                 //Open/unpaid transaction
-                logger.info { "Unpaid transaction for license plate "+ resultMap["licensePlate"]!! + " @ " + LocalDateTime.now() }
+                logger.info { "Unpaid transaction for license plate "+ licensePlate + " @ " + LocalDateTime.now() }
             }
             //if there is a recent transaction
-            val transaction: Transaction? = transactionService.findLatestTransactionForLicensePlate(resultMap["licensePlate"]!!)
+            val transaction: Transaction? = transactionService.findLatestTransactionForLicensePlate(licensePlate)
             if(transaction !=null) {
                 //CurrentDateTime is before Transaction DepartureTime => Car has reached barrier intending to exit the parking lot
                 if(LocalDateTime.now() < transaction.departureTime!!){
-                    logger.info { "Barrier RAISED for license plate "+ resultMap["licensePlate"]!! + " @ " + LocalDateTime.now() }
+                    logger.info { "Barrier RAISED for license plate "+ licensePlate + " @ " + LocalDateTime.now() }
                 }
                 // CurrentDateTime is after Transaction DepartureTime => Car has reached barrier intending to exit the parking lot
                 // after the allotted exit period
                 else if(LocalDateTime.now() > transaction.departureTime!!){
                     transactionService.addTransaction(
-                        resultMap["licensePlate"]!!,
+                        licensePlate,
                         airport)
                     airportService.increaseOccupiedParkingSpaces(airport)
-                    logger.info { "A new transaction was added for license plate "+ resultMap["licensePlate"]!! + " @ " + LocalDateTime.now() }
-                    logger.info { "Barrier RAISED for license plate "+ resultMap["licensePlate"]!! + " @ " + LocalDateTime.now() }
+                    logger.info { "A new transaction was added for license plate "+ licensePlate + " @ " + LocalDateTime.now() }
+                    logger.info { "Barrier RAISED for license plate "+ licensePlate + " @ " + LocalDateTime.now() }
                     responseMap.put("result",true)
                 }
             }else{
                 // First time entering using the parking lot
                 transactionService.addTransaction(
-                    resultMap["licensePlate"]!!,
+                    licensePlate,
                     airport)
                 airportService.increaseOccupiedParkingSpaces(airport)
-                logger.info { "A new transaction was added for license plate "+ resultMap["licensePlate"]!! + " @ " + LocalDateTime.now() }
-                logger.info { "Barrier RAISED for license plate "+ resultMap["licensePlate"]!! + " @ " + LocalDateTime.now() }
+                logger.info { "A new transaction was added for license plate "+ licensePlate + " @ " + LocalDateTime.now() }
+                logger.info { "Barrier RAISED for license plate "+ licensePlate + " @ " + LocalDateTime.now() }
                 responseMap.put("result",true)
             }
 
         }else{
-            logger.info { "Invalid car license plate " + resultMap["licensePlate"]!! + " @ " + LocalDateTime.now() }
+            logger.info { "Invalid car license plate " + licensePlate + " @ " + LocalDateTime.now() }
             responseMap.put("result",false)
         }
 
