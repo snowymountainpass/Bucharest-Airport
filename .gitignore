@@ -8,3 +8,4 @@ backend/docker-compose.yaml
 ### Data Folders ###
 backend/data/
 data/
+/docker-compose.yaml
