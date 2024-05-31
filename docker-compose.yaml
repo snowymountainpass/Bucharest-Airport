@@ -1,13 +1,13 @@
 version: '3.8'
-
+# DO NOT COMMIT THIS FILE
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres
+    container_name: Bucharest-Airport-DB
     restart: always
     environment:
-      POSTGRES_USER: username
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: vasilecipriangabriel
+      POSTGRES_PASSWORD: Cipipass@db1
       POSTGRES_DB: BucharestAirport
     ports:
       - "5432:5432"
@@ -16,15 +16,15 @@ services:
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: backend
+      context: backend
+      dockerfile: ./Dockerfile
+    container_name: Backend-Bucharest-Airport
     restart: always
     ports:
       - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/BucharestAirport
-      SPRING_DATASOURCE_USERNAME: username
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_USERNAME: vasilecipriangabriel
+      SPRING_DATASOURCE_PASSWORD: Cipipass@db1
     depends_on:
       - postgres

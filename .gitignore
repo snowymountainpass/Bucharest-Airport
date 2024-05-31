@@ -4,3 +4,7 @@
 ### Project ###
 backend/src/main/resources/application.properties
 backend/docker-compose.yaml
+
+### Data Folders ###
+backend/data/
+data/
