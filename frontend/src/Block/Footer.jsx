@@ -1,6 +1,6 @@
 const Footer = () => {
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear().toLocaleString("en-US");
 
   return (
     <footer className="bg-white rounded-lg shadow m-4 dark:bg-gray-800">

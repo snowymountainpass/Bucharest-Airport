@@ -48,7 +48,7 @@ class OrderController @Autowired constructor(val orderService: OrderService,
         val licensePlate = requestBody["licensePlate"]
 
         //Check if the license plate contains any unwanted keywords
-        if(utility.isValidAgainstSQLInjection(licensePlate.toString().lowercase(Locale.getDefault()))){
+        if(!utility.isValidAgainstSQLInjection(licensePlate.toString().lowercase(Locale.getDefault()))){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(mapOf("status" to "Denied"))
         }
 

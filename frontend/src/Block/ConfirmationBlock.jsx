@@ -35,7 +35,6 @@ const ConfirmationBlock = () => {
             <HeroBackgroundSection
                 customerEmail={customerEmail}
             />
-            // TODO: add toast - https://flowbite.com/docs/components/toast/
         );
     }
     return null;
