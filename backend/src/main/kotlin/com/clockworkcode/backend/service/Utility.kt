@@ -19,7 +19,7 @@ class Utility {
     }
 
     fun isValidAgainstSQLInjection(licensePlate: String):Boolean{
-        return licensePlate
+        return !licensePlate
             .matches(Regex("(?i)(select|insert|update|delete|drop|create|grant|revoke|truncate|union|exec|execute|declare|cast|convert|alter|table|where|join|order\\\\s+by|group\\\\s+by|having|limit|offset|fetch|into|exists|distinct|or\\\\s+1=1|--|;|')"))
     }
 
