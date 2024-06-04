@@ -19,6 +19,9 @@ class OrderService {
     @Value("\${STRIPE_SECRET_KEY}")
     lateinit var apiKey:String
 
+    @Value("\${frontend.url}")
+    lateinit var frontendUrl: String
+
     fun createProduct(paymentDTO: PaymentDTO):Product {
 
         val durationInMinutes:Long = abs(Duration.between(paymentDTO.entryTime,paymentDTO.departureTime).toMinutes())
@@ -60,7 +63,7 @@ class OrderService {
             .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)//
             .setMode(SessionCreateParams.Mode.PAYMENT)//
             .setUiMode(SessionCreateParams.UiMode.EMBEDDED)//
-            .setReturnUrl("http://localhost:3000/confirmation?session_id={CHECKOUT_SESSION_ID}")//
+            .setReturnUrl("$frontendUrl/confirmation?session_id={CHECKOUT_SESSION_ID}")//
             .addLineItem(lineItem)//
             .putMetadata("licensePlate",product.statementDescriptor)
             .build()

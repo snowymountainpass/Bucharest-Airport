@@ -45,12 +45,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-//tasks.withType(KotlinCompile).configureEach {
-//    kotlinOptions {
-//        freeCompilerArgs += '-Xjsr305=strict'
-//        jvmTarget = '21'
-//    }
-//}
+springBoot {
+    mainClass.set('com.clockworkcode.backend.BackendApplicationKt')
+}
 
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {

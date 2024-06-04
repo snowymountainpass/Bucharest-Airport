@@ -4,6 +4,7 @@ import axios from "axios";
 import * as atoms from "./Atoms.jsx";
 import { useEffect, useState } from "react";
 import { isToastVisibleAtom } from "./Atoms.jsx";
+import api from "./API.js";
 
 const SearchBar = () => {
   const [licensePlate, setLicensePlate] = useAtom(atoms.licensePlateAtom);
@@ -23,21 +24,21 @@ const SearchBar = () => {
   };
 
   function determineCheckoutCost() {
-    axios
-      .post(
-        "http://localhost:8080/order/checkout",
-        {
-          licensePlate: licensePlate.toString().toUpperCase(),
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers":
-              "Origin, X-Requested-With, Content-Type, Accept",
-          },
-        }
-      )
+    api
+        .post(
+            "/order/checkout",
+            {
+              licensePlate: licensePlate.toString().toUpperCase(),
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers":
+                    "Origin, X-Requested-With, Content-Type, Accept",
+              },
+            }
+        )
       .then(function (response) {
         setClientSecret(response.data.clientSecret);
         setIsValidLicensePlate(true);
